@@ -3,30 +3,35 @@
 		"node": ">=16.0.0",
 		"npm": ">=7.0.0"
 	},
+	"private": true,
 	"name": "bank-sim",
 	"scripts": {
 		"build": "npm run build --workspaces --if-present",
 		"prebuild": "npm run prebuild --workspaces --if-present",
 		"pretest": "npm run prebuild --workspaces --if-present",
+		"dev": "npm run dev --workspaces --if-present",
 		"start": "npm start --workspaces --if-present",
 		"test": "npm test --workspaces --if-present"
 	},
 	"type": "module",
-	"workspaces": ["src/bank-sim-frontend"],
+	"workspaces": [
+		"src/bank-sim-frontend"
+	],
 	"dependencies": {
 		"ethers": "^6.13.4",
-		"react-toastify": "^10.0.6",
-		"web3": "^4.15.0",
+		"lucide-react": "^0.455.0",
+		"next": "15.0.3",
 		"react": "19.0.0-rc-66855b96-20241106",
 		"react-dom": "19.0.0-rc-66855b96-20241106",
-		"next": "15.0.3"
+		"react-toastify": "^10.0.6",
+		"web3": "^4.15.0"
 	},
 	"devDependencies": {
-		"typescript": "^5",
 		"@types/node": "^20",
 		"@types/react": "^18",
 		"@types/react-dom": "^18",
 		"postcss": "^8",
-		"tailwindcss": "^3.4.1"
+		"tailwindcss": "^3.4.1",
+		"typescript": "^5"
 	}
 }
