@@ -24,6 +24,7 @@
 		"react": "19.0.0-rc-66855b96-20241106",
 		"react-dom": "19.0.0-rc-66855b96-20241106",
 		"react-toastify": "^10.0.6",
+		"usehooks-ts": "^3.1.0",
 		"web3": "^4.15.0"
 	},
 	"devDependencies": {
