@@ -10,7 +10,7 @@ const figTree = Figtree({
 });
 export default function App({ Component, pageProps }: AppProps) {
   return (
-			<div className={cn(figTree.variable, "h-dvh w-full")}>
+			<div className={cn(figTree.variable, "h-dvh w-full p-6")}>
 				<Component {...pageProps} />
 			</div>
 		);
