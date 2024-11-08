@@ -9,7 +9,7 @@
         "bank-sim-backend"
       ],
       "source": [
-        "src/bank-sim-frontend/dist"
+        "src/bank-sim-frontend/out"
       ],
       "type": "assets",
       "workspace": "bank-sim-frontend"
