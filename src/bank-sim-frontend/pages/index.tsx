@@ -1,4 +1,5 @@
-import { DollarSign } from "lucide-react";
+import { ArrowRightLeft, DollarSign, ShuffleIcon } from "lucide-react";
+import Link from "next/link";
 
 const coinLists = [
 	{
@@ -46,27 +47,54 @@ const mockTransactions = [
 export default function Home() {
 	return (
 		<>
-			<div className="bg-gray-200 rounded-2xl shadow-xl md:p-6 flex flex-col md:flex-row mb-8">
-				<div className="aspect-video rounded-2xl bg-gradient-to-r from-pink-500 to-yellow-500 mb-5 shadow-lg md:max-w-sm w-full" />
-				<div className="flex items-start justify-between gap-6 px-6 pb-6 md:flex-col">
-					<div>
-						<p>Account Balance</p>
-						<h1 className="text-4xl font-bold">$ 4,210</h1>
-					</div>
-					<div className="flex flex-col justify-between gap-2">
-						{coinLists.map((v, i) => (
-							<div
-								key={`item-k-${v.image}`}
-								className="flex gap-2 items-center"
-							>
-								<img src={v.image} alt="coin" className="w-4 aspect-square" />
-								<p className="text-xs font-bold">{v.price}</p>
-							</div>
-						))}
+			<div className="flex flex-col md:flex-row gap-4">
+				<div className="bg-gray-200 rounded-2xl shadow-xl md:p-6 flex flex-col md:flex-row mb-8 w-full">
+					<div className="aspect-video rounded-2xl mb-5 md:mb-0 shadow-lg bg-white md:max-w-sm w-full bg-gradient-to-r from-green-200 to-blue-500" />
+					<div className="flex items-start justify-between gap-6 px-6 pb-6 md:pb-0 md:flex-col">
+						<div>
+							<p>Account Balance</p>
+							<h1 className="text-4xl font-bold">$ 4,210</h1>
+						</div>
+						<div className="flex flex-col justify-between gap-2">
+							{coinLists.map((v, i) => (
+								<div
+									key={`item-k-${v.image}`}
+									className="flex gap-2 items-center"
+								>
+									<img src={v.image} alt="coin" className="w-4 aspect-square" />
+									<p className="text-xs font-bold">{v.price}</p>
+								</div>
+							))}
+						</div>
 					</div>
 				</div>
+				<div className="mb-8 flex gap-4 md:flex-col">
+					<button
+						type="button"
+						className="bg-blue-500/20 text-blue-500 rounded-2xl p-4 flex flex-col items-center justify-center font-bold gap-2 grow w-full"
+					>
+						<ArrowRightLeft className="size-10" />
+						Transfer / Recive
+					</button>
+					<Link
+						href="https://www.bitkub.com/th/market/btc"
+						className="bg-green-500/20 text-primary rounded-2xl p-4 flex flex-col items-center justify-center font-bold gap-2 grow w-full"
+						target="_blank"
+					>
+						<ShuffleIcon className="size-10" />
+						Exchange
+					</Link>
+				</div>
 			</div>
-			<h2 className="text-3xl font-bold mb-3">Transactions</h2>
+			<div className="mb-3 flex items-center justify-between">
+				<h2 className="text-3xl font-bold">Transactions</h2>
+				<button
+					type="button"
+					className="px-4 py-3 rounded-lg bg-gray-100 hover:bg-gray-200 transition"
+				>
+					All Transactions
+				</button>
+			</div>
 			<div className="flex flex-col divide-y-2">
 				{mockTransactions.map((v) => (
 					<div

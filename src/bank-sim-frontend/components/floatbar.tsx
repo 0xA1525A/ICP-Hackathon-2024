@@ -11,35 +11,41 @@ const navbarIcons = [
 	{
 		icon: HomeIcon,
 		name: "Home",
+		href: "/",
 	},
 	{
 		icon: ReceiptText,
 		name: "History",
+		href: "/transactions",
 	},
 	{
 		icon: QrCode,
 		name: "SCAN",
+		href: "/scan",
 	},
 	{
 		icon: ChartCandlestick,
 		name: "Market",
+		href: "/market",
 	},
 	{
 		icon: Settings2,
 		name: "Settings",
+		href: "/settings",
 	},
 ];
 
 export const Floatbar: FC = () => {
 	return (
 		<>
-			<div className="h-32 w-full"></div>
+			<div className="h-24 w-full md:hidden" />
 			<div className="fixed bottom-3 max-w-sm w-full left-1/2 -translate-x-1/2 px-3 md:hidden">
 				<div className="bg-primary rounded-2xl w-full">
-					<div className="flex items-center gap-4 justify-between h-full text-white px-2 py-2">
+					<div className="flex items-center gap-2 justify-between h-full text-white px-2 py-2">
 						{navbarIcons.map((v, i) =>
 							i === 2 ? (
-								<div
+								<a
+									href="/scan"
 									className="w-full grow relative"
 									key={`${v.icon.displayName}_${v.name}_Name`}
 								>
@@ -47,15 +53,16 @@ export const Floatbar: FC = () => {
 										{<v.icon className="size-9" />}
 									</div>
 									<p className="text-center text-xs font-bold mt-7">{v.name}</p>
-								</div>
+								</a>
 							) : (
-								<div
+								<a
+									href={v.href}
 									key={`${v.name}_Name`}
 									className="w-full grow  aspect-square flex flex-col font-bold text-xxs items-center justify-center rounded-xl hover:bg-black/20 transition-all"
 								>
 									{<v.icon className="size-7" />}
 									<span className="mt-1">{v.name}</span>
-								</div>
+								</a>
 							),
 						)}
 					</div>

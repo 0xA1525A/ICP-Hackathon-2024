@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
 		<div
 			className={cn(
 				figTree.variable,
-				"h-dvh w-full p-6 md:py-12 max-w-5xl mx-auto",
+				"min-h-dvh w-full p-6 md:py-12 max-w-5xl mx-auto",
 			)}
 		>
 			<Navbar />
