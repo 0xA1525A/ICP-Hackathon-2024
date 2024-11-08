@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "bank-sim-backend": {
+      "main": "src/bank-sim-backend/main.mo",
+      "type": "motoko"
+    },
+    "bank-sim-frontend": {
+      "dependencies": [
+        "bank-sim-backend"
+      ],
+      "source": [
+        "src/bank-sim-frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "bank-sim-frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
