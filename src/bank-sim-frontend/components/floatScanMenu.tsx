@@ -9,12 +9,8 @@ export default function FloatScanMenu() {
 		<div className="flex gap-2">
 			<div className="bg-white p-2 rounded-full flex flex-nowrap text-black grow w-full">
 				<Link
-					href="/transfer"
-					className={cn(
-						"aspect-square py-2 rounded-full font-bold grow w-full",
-
-						router.pathname === "/transfer" ? "bg-primary text-white" : "",
-					)}
+					href="/"
+					className={"aspect-square py-2 rounded-full font-bold grow w-full"}
 				>
 					<ChevronLeft />
 				</Link>

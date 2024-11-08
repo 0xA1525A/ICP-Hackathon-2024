@@ -1,4 +1,6 @@
+import Logo from "@/components/logo";
 import cn from "@/lib/cn";
+import { User } from "lucide-react";
 import { useRef, useState } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
@@ -10,27 +12,23 @@ export const Navbar = () => {
 	});
 	return (
 		<div className="flex items-center justify-between mb-5">
-			<h1 className="font-bold text-2xl gap-1 flex items-center md:text-3xl">
-				<span className="bg-primary text-white aspect-square md:w-10 rounded-xl flex items-center justify-center font-extrabold w-10">
-					D
-				</span>
-				Coin
-			</h1>
+			<Logo />
 			<div className="flex items-center gap-2">
 				<div className="relative" ref={ref}>
 					<button
-						className="flex w-10 md:w-14 aspect-square bg-gray-300 rounded-full "
+						className=" w-10 md:w-14 aspect-square bg-gray-300 rounded-full  flex items-center justify-center"
 						type="button"
 						onClick={() => {
 							setIsOpen((v) => !v);
 						}}
 					>
+						<User />
 						<span className="sr-only">Profile</span>
 					</button>
 					<div
 						className={cn(
 							isOpen ? "absolute" : "hidden",
-							"right-0 top-14 mt-2 rounded-2xl bg-white border-2 w-64 flex flex-col overflow-hidden",
+							"right-0 top-10 md:top-14 mt-2 rounded-2xl bg-white border-2 w-64 flex flex-col overflow-hidden",
 						)}
 					>
 						<button

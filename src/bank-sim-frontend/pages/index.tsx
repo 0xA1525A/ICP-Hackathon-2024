@@ -1,3 +1,5 @@
+import { Floatbar } from "@/components/floatbar";
+import { Navbar } from "@/components/navbar";
 import { ArrowRightLeft, DollarSign, ShuffleIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -47,6 +49,7 @@ const mockTransactions = [
 export default function Home() {
 	return (
 		<>
+			<Navbar />
 			<div className="flex flex-col md:flex-row gap-4">
 				<div className="bg-gray-200 rounded-2xl shadow-xl md:p-6 flex flex-col md:flex-row mb-8 w-full">
 					<div className="aspect-video rounded-2xl mb-5 md:mb-0 shadow-lg bg-white md:max-w-sm w-full bg-gradient-to-r from-green-200 to-blue-500" />
@@ -69,16 +72,16 @@ export default function Home() {
 					</div>
 				</div>
 				<div className="mb-8 flex gap-4 md:flex-col">
-					<button
-						type="button"
-						className="bg-blue-500/20 text-blue-500 rounded-2xl p-4 flex flex-col items-center justify-center font-bold gap-2 grow w-full"
+					<Link
+						href="/transfer"
+						className="bg-blue-500/20 text-blue-500 hover:bg-blue-500/40 transition rounded-2xl p-4 flex flex-col items-center justify-center font-bold gap-2 grow w-full whitespace-nowrap"
 					>
 						<ArrowRightLeft className="size-10" />
 						Transfer / Recive
-					</button>
+					</Link>
 					<Link
 						href="https://www.bitkub.com/th/market/btc"
-						className="bg-green-500/20 text-primary rounded-2xl p-4 flex flex-col items-center justify-center font-bold gap-2 grow w-full"
+						className="bg-green-500/20 text-primary hover:bg-green-500/40 transition rounded-2xl p-4 flex flex-col items-center justify-center font-bold gap-2 grow w-full"
 						target="_blank"
 					>
 						<ShuffleIcon className="size-10" />
@@ -111,6 +114,7 @@ export default function Home() {
 					</div>
 				))}
 			</div>
+			<Floatbar />
 		</>
 	);
 }
