@@ -2,9 +2,8 @@ import Logo from "@/components/logo";
 import cn from "@/lib/cn";
 import { useFade } from "@/lib/usefade";
 import { useUser } from "@/lib/userContext";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { User } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { useRef } from "react";
 import { toast } from "react-toastify";
 import { useOnClickOutside } from "usehooks-ts";
@@ -32,8 +31,8 @@ export const Navbar = () => {
 	useOnClickOutside(ref, () => {
 		setIsOpen(false);
 	});
-	const router = useRouter();
-	const path = router.pathname;
+	const router = useRouterState();
+	const path = router.location.pathname;
 	return (
 		<div className="flex items-center justify-between mb-5">
 			<Link href={"/"}>

@@ -4,7 +4,6 @@
 			"main": "backend/main.mo",
 			"type": "motoko",
 			"declarations": {
-				"node_compatibility": true,
 				"output": "declarations/backend"
 			}
 		},
@@ -13,7 +12,6 @@
 			"source": ["./out"],
 			"type": "assets",
 			"declarations": {
-				"node_compatibility": true,
 				"output": "declarations/frontend"
 			}
 		}

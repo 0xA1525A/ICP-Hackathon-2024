@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,11 +13,11 @@
 body {
 	color: var(--foreground);
 	background: var(--background);
-	font-family: var(--font-fig-tree), Helvetica, sans-serif;
+	font-family: "Figtree", sans-serif;
 }
 
 * {
-	font-family: var(--font-fig-tree), Helvetica, sans-serif;
+	font-family: "Figtree", sans-serif;
 }
 
 @keyframes fadeIn {
