@@ -1,0 +1,18 @@
+type Iden = text;
+type AccountData = 
+ record {
+   balance: float64;
+   firstname: text;
+   isSuspended: bool;
+   lastname: text;
+   password: text;
+ };
+service : {
+  createAccount: (text, text, text, text) -> (vec Iden);
+  getAccount: (text) -> (AccountData);
+  getAllData: () -> (vec AccountData) query;
+  getAllIden: () -> (vec Iden) query;
+  hashPassword: (text) -> (text) query;
+  replaceNullNat: (opt nat, nat) -> (nat) query;
+  validateLogin: (text, text) -> (bool);
+}

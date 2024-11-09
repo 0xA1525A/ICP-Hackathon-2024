@@ -1,16 +1,12 @@
-import {
-	canisterId,
-	createActor
-} from 'declarations/backend';
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 export default function page() {
 	useEffect(()=>{
-		console.log(createActor, canisterId	)
+		console.log(process.env);
+		// backend.getAllData().then((data) => {
+		// 	console.log(data);
+		// })
 	}, [])
 	return <>{`Hello`}</>;
 }
 
-// export default function page() {
-// 	return <></>;
-// }
