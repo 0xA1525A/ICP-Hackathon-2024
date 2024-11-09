@@ -19,31 +19,39 @@ actor {
         password: Text;
     };
 
-    // var max_user_amount: Nat = 10_000_000_000;
+    // max_user_amount: Nat = 10_000_000_000;
     let dummy_iden: Iden = "0";
     let dummy_pass: Text = "Hello World!";
-    let dummy_data: AccountData = {firstname = "0"; lastname = "0"; balance = 0; isSuspended = true; password = dummy_pass};
+    let dummy_data: AccountData = {
+        firstname = "0";
+        lastname = "0";
+        balance = 0.0;
+        isSuspended = true;
+        password = dummy_pass
+    };
 
-    stable var IDENS = [dummy_iden];
-    stable var DATA = [dummy_data];
+    private stable var IDENS = [dummy_iden];
+    private stable var DATA = [var dummy_data];
 
-    public query func replaceNullNat(nullable: ?Nat, default: Nat) : async Nat {
+    private func getIndex(iden: Text): ?Nat {
+        return Array.indexOf<Iden>(iden, IDENS, Text.equal);
+    };
+
+    private func replaceNull<T>(nullable: ?T, default: T): T {
         switch (nullable) {
             case (?nullable) {nullable};
             case (_) {default};
         };
     };
 
-    public func getAccount(iden: Text): async AccountData {
-        let nullableIndex: ?Nat = Array.indexOf<Iden>(iden, IDENS, Text.equal);
-        let index: Nat = await replaceNullNat(nullableIndex, 0);
-        let accountData: AccountData = DATA[index];
-
-        return accountData;
+    public func getBalance(iden: Text): async Float {
+        let nullableIndex: ?Nat = getIndex(iden);
+        let index: Nat = replaceNull<Nat>(nullableIndex, 0);
+        return DATA[index].balance;
     };
 
-    public shared func createAccount(iden: Text, password: Text, firstname: Text, lastname: Text): async [Iden] {
-        if (Array.indexOf<Iden>(iden, IDENS, Text.equal) != null) {
+    public func createAccount(iden: Text, password: Text, firstname: Text, lastname: Text, balance: Float): async [Iden] {
+        if (getIndex(iden) != null or iden == "" or password == "" or firstname == "" or lastname == "") {
             return ["\\"];
         };
 
@@ -51,27 +59,33 @@ actor {
 
         let hashedPwd: Text = await hashPassword(password);
 
-        let mIdenArray: [Iden] = Array.append<Iden>(IDENS, [castedIden]);
-        let mDataArray: [AccountData] = Array.append<AccountData>(DATA, [{firstname = firstname; lastname = lastname; balance = 0; isSuspended = false; password = hashedPwd}]);
+        let mIdenArray = Array.append<Iden>(IDENS, [castedIden]);
+        let mDataArray = Array.append<AccountData>(Array.freeze(DATA), [{
+            firstname = firstname;
+            lastname = lastname;
+            balance = balance;
+            isSuspended = false;
+            password = hashedPwd
+        }]);
 
         IDENS := mIdenArray;
-        DATA := mDataArray;
+        DATA := Array.thaw(mDataArray);
 
         return [iden];
     };
 
-    public shared query func hashPassword(plPass: Text): async Text {
+    public func hashPassword(plPass: Text): async Text {
         // Felt cute, might continue later UwU.
         return plPass: Text;
     };
 
     public func validateLogin(iden: Text, plPass: Text): async Bool {
-        if (Array.indexOf<Iden>(iden, IDENS, Text.equal) == null) {
+        if (getIndex(iden) == null) {
             return false;
         };
 
-        let nullableIndex: ?Nat = Array.indexOf<Iden>(iden, IDENS, Text.equal);
-        let dataIndex: Nat = await replaceNullNat(nullableIndex, 0);
+        let nullableIndex: ?Nat = getIndex(iden);
+        let dataIndex: Nat = replaceNull<Nat>(nullableIndex, 0);
 
         if (dataIndex == 0) {
             return false;
@@ -87,11 +101,54 @@ actor {
         return true;
     };
 
-    public query func getAllIden(): async [Iden] {
+    public func getAllIden(): async [Iden] {
         return IDENS;
     };
 
-    public query func getAllData(): async [AccountData] {
-        return DATA;
+    public func transfer(sender: Iden, receiver: Iden, amount: Float): async [AccountData] {
+        let senderIndexNullable: ?Nat = getIndex(sender);
+        let receiverIndexNullable: ?Nat = getIndex(receiver);
+
+        if (senderIndexNullable == null or receiverIndexNullable == null) {
+            return [DATA[0], DATA[0]];
+        };
+
+        let senderIndex: Nat = replaceNull<Nat>(senderIndexNullable, 0);
+        let receiverIndex: Nat = replaceNull<Nat>(receiverIndexNullable, 0);
+
+        let senderBalance: Float = DATA[senderIndex].balance;
+        let receiverBalance: Float = DATA[receiverIndex].balance;
+
+        if (amount > senderBalance) {
+            return [DATA[0], DATA[0]];
+        };
+
+        let oldSenderData: AccountData = DATA[senderIndex];
+        let oldReceiverData: AccountData = DATA[receiverIndex];
+
+        let newSenderData: AccountData = {
+            firstname = oldSenderData.firstname;
+            lastname = oldSenderData.lastname;
+            balance = senderBalance - amount;
+            isSuspended = oldSenderData.isSuspended;
+            password = oldSenderData.password;
+        };
+
+        let newReceiverData: AccountData = {
+            firstname = oldReceiverData.firstname;
+            lastname = oldReceiverData.lastname;
+            balance = receiverBalance + amount;
+            isSuspended = oldReceiverData.isSuspended;
+            password = oldReceiverData.password;
+        };
+
+        let mData = DATA;
+
+        mData[senderIndex] := newSenderData;
+        mData[receiverIndex] := newReceiverData;
+
+        DATA := mData;
+
+        return [DATA[senderIndex], DATA[receiverIndex]];
     };
 };
