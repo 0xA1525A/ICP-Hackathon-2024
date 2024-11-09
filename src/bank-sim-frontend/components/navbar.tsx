@@ -1,22 +1,27 @@
 import Logo from "@/components/logo";
 import cn from "@/lib/cn";
+import { useFade } from "@/lib/usefade";
 import { User } from "lucide-react";
-import { useRef, useState } from "react";
+import Link from "next/link";
+import { useRef } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
 export const Navbar = () => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen, fadeProps] = useFade();
+
 	const ref = useRef(null);
 	useOnClickOutside(ref, () => {
 		setIsOpen(false);
 	});
 	return (
 		<div className="flex items-center justify-between mb-5">
-			<Logo />
+			<Link href={"/"}>
+				<Logo />
+			</Link>
 			<div className="flex items-center gap-2">
 				<div className="relative" ref={ref}>
 					<button
-						className=" w-10 md:w-14 aspect-square bg-gray-300 rounded-full  flex items-center justify-center"
+						className="w-10 md:w-14 aspect-square bg-gray-300 rounded-full  flex items-center justify-center"
 						type="button"
 						onClick={() => {
 							setIsOpen((v) => !v);
@@ -30,6 +35,7 @@ export const Navbar = () => {
 							isOpen ? "absolute" : "hidden",
 							"right-0 top-10 md:top-14 mt-2 rounded-2xl bg-white border-2 w-64 flex flex-col overflow-hidden",
 						)}
+						{...fadeProps}
 					>
 						<button
 							type="button"

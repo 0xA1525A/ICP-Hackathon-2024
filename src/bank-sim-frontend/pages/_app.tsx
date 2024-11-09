@@ -1,4 +1,5 @@
 import cn from "@/lib/cn";
+import { UserProvierContext } from "@/lib/userContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Figtree } from "next/font/google";
@@ -16,7 +17,9 @@ export default function App({ Component, pageProps }: AppProps) {
 				"min-h-dvh w-full p-6 md:py-12 max-w-5xl mx-auto",
 			)}
 		>
-			<Component {...pageProps} />
+			<UserProvierContext>
+				<Component {...pageProps} />
+			</UserProvierContext>
 		</div>
 	);
 }

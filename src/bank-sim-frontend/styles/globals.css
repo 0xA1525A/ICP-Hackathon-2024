@@ -5,7 +5,7 @@
 :root {
 	--background: #ffffff;
 	--foreground: #171717;
-  --primary: #0b2;
+	--primary: #0b2;
 }
 
 body {
@@ -16,4 +16,22 @@ body {
 
 * {
 	font-family: var(--font-fig-tree), Helvetica, sans-serif;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }

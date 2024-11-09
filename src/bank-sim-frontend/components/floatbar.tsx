@@ -7,6 +7,7 @@ import {
 	ReceiptText,
 	Settings2,
 } from "lucide-react";
+import Link from "next/link";
 const navbarIcons = [
 	{
 		icon: HomeIcon,
@@ -44,7 +45,7 @@ export const Floatbar: FC = () => {
 					<div className="flex items-center gap-2 justify-between h-full text-white px-2 py-2">
 						{navbarIcons.map((v, i) =>
 							i === 2 ? (
-								<a
+								<Link
 									href="/scan"
 									className="w-full grow relative"
 									key={`${v.icon.displayName}_${v.name}_Name`}
@@ -53,16 +54,16 @@ export const Floatbar: FC = () => {
 										{<v.icon className="size-9" />}
 									</div>
 									<p className="text-center text-xs font-bold mt-7">{v.name}</p>
-								</a>
+								</Link>
 							) : (
-								<a
+								<Link
 									href={v.href}
 									key={`${v.name}_Name`}
 									className="w-full grow  aspect-square flex flex-col font-bold text-xxs items-center justify-center rounded-xl hover:bg-black/20 transition-all"
 								>
 									{<v.icon className="size-7" />}
 									<span className="mt-1">{v.name}</span>
-								</a>
+								</Link>
 							),
 						)}
 					</div>
