@@ -1,3 +1,4 @@
+import Qrscr from "@/components/qrscr";
 import cn from "@/lib/cn";
 import { UserProvierContext } from "@/lib/userContext";
 import "@/styles/globals.css";
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			)}
 		>
 			<UserProvierContext>
+				<Qrscr />
 				<Component {...pageProps} />
 			</UserProvierContext>
 		</div>

@@ -1,8 +1,9 @@
+import DebitCard from "@/components/card";
 import { Floatbar } from "@/components/floatbar";
 import { Navbar } from "@/components/navbar";
+import { IsAuthed } from "@/lib/userContext";
 import { ArrowRightLeft, DollarSign, ShuffleIcon } from "lucide-react";
 import Link from "next/link";
-
 const coinLists = [
 	{
 		image: "/bitcoin-btc-logo.svg",
@@ -48,11 +49,11 @@ const mockTransactions = [
 
 export default function Home() {
 	return (
-		<>
+		<IsAuthed>
 			<Navbar />
 			<div className="flex flex-col md:flex-row gap-4">
 				<div className="bg-gray-200 rounded-2xl shadow-xl md:p-6 flex flex-col md:flex-row mb-8 w-full">
-					<div className="aspect-video rounded-2xl mb-5 md:mb-0 shadow-lg bg-white md:max-w-sm w-full bg-gradient-to-r from-green-200 to-blue-500" />
+					<DebitCard />
 					<div className="flex items-start justify-between gap-6 px-6 pb-6 md:pb-0 md:flex-col">
 						<div>
 							<p>Account Balance</p>
@@ -73,11 +74,11 @@ export default function Home() {
 				</div>
 				<div className="mb-8 flex gap-4 md:flex-col">
 					<Link
-						href="/transfer"
+						href="?transfer=send"
 						className="bg-blue-500/20 text-blue-500 hover:bg-blue-500/40 transition rounded-2xl p-4 flex flex-col items-center justify-center font-bold gap-2 grow w-full whitespace-nowrap"
 					>
 						<ArrowRightLeft className="size-10" />
-						Transfer / Recive
+						Transfer / Receive
 					</Link>
 					<Link
 						href="https://www.bitkub.com/th/market/btc"
@@ -115,6 +116,6 @@ export default function Home() {
 				))}
 			</div>
 			<Floatbar />
-		</>
+		</IsAuthed>
 	);
 }

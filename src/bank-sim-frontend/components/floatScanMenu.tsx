@@ -41,7 +41,7 @@ export default function FloatScanMenu() {
 						router.pathname === "/myqr" ? "bg-primary text-white" : "",
 					)}
 				>
-					RECIVE
+					RECEIVE
 				</Link>
 			</div>
 		</div>

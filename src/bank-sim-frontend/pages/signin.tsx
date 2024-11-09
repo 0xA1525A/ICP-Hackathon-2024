@@ -1,8 +1,16 @@
 import Logo from "@/components/logo";
+import { useUser } from "@/lib/userContext";
 import Link from "next/link";
 
 export default function page() {
-	const handleSubmit = (e: React.FormEvent) => {};
+	const { signIn } = useUser();
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		const email = (document.getElementById("email") as HTMLInputElement).value;
+		const password = (document.getElementById("password") as HTMLInputElement)
+			.value;
+		signIn(email, password);
+	};
 	return (
 		<div className="h-dvh md:-mx-32 md:-my-24 -m-6 bg-gradient-to-bl from-green-400 via-slate-50 to-slate-50 py-12 p-6">
 			<div className="flex flex-col max-w-sm mx-auto items-start  my-0 md:my-12 ">

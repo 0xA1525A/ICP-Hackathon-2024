@@ -1,6 +1,7 @@
 import Logo from "@/components/logo";
 import cn from "@/lib/cn";
 import { useFade } from "@/lib/usefade";
+import { useUser } from "@/lib/userContext";
 import { User } from "lucide-react";
 import Link from "next/link";
 import { useRef } from "react";
@@ -10,6 +11,7 @@ export const Navbar = () => {
 	const [isOpen, setIsOpen, fadeProps] = useFade();
 
 	const ref = useRef(null);
+	const { signOut } = useUser();
 	useOnClickOutside(ref, () => {
 		setIsOpen(false);
 	});
@@ -33,19 +35,20 @@ export const Navbar = () => {
 					<div
 						className={cn(
 							isOpen ? "absolute" : "hidden",
-							"right-0 top-10 md:top-14 mt-2 rounded-2xl bg-white border-2 w-64 flex flex-col overflow-hidden",
+							"right-0 top-10 md:top-14 mt-2 rounded-2xl bg-white border-2 w-64 flex flex-col overflow-hidden z-30",
 						)}
 						{...fadeProps}
 					>
 						<button
 							type="button"
-							className="hover:bg-black/10 text-left flex gap-2 items-center p-4"
+							className="hover:bg-black/10 text-left flex gap-2 items-center p-4 transition"
 						>
 							Settings
 						</button>
 						<button
 							type="button"
-							className="hover:bg-black/10 text-left flex gap-2 items-center p-4"
+							className="hover:bg-black/10 text-left flex gap-2 items-center p-4 transition"
+							onClick={() => signOut()}
 						>
 							Sign Out
 						</button>

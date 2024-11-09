@@ -17,22 +17,22 @@ const navbarIcons = [
 	{
 		icon: ReceiptText,
 		name: "History",
-		href: "/transactions",
+		href: "/",
 	},
 	{
 		icon: QrCode,
 		name: "SCAN",
-		href: "/scan",
+		href: "?transfer=scan",
 	},
 	{
 		icon: ChartCandlestick,
 		name: "Market",
-		href: "/market",
+		href: "/",
 	},
 	{
 		icon: Settings2,
 		name: "Settings",
-		href: "/settings",
+		href: "/",
 	},
 ];
 
@@ -46,7 +46,7 @@ export const Floatbar: FC = () => {
 						{navbarIcons.map((v, i) =>
 							i === 2 ? (
 								<Link
-									href="/scan"
+									href="?transfer=scan"
 									className="w-full grow relative"
 									key={`${v.icon.displayName}_${v.name}_Name`}
 								>

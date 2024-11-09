@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import {
 	type ReactNode,
 	createContext,
@@ -6,6 +7,15 @@ import {
 	useMemo,
 	useState,
 } from "react";
+
+export const cardDesign = {
+	CARD1: {
+		image: "/14.-Prim_1.jpg",
+	},
+	CARD2: {
+		image: "/100.-test.webp",
+	},
+} as const;
 
 type User = {
 	id: string;
@@ -16,26 +26,49 @@ type User = {
 
 type UserContextType = {
 	user?: User;
+	card: {
+		number: string;
+		expiry: string;
+		cvv: string;
+		name: string;
+		design: keyof typeof cardDesign;
+		balance: number;
+	};
 	signIn: (email: string, password: string) => void;
 	isSignedIn: boolean;
 	isLoading: boolean;
+	setCardDesign: (design: keyof typeof cardDesign) => void;
 	signOut: () => void;
 };
 const UserContext = createContext<UserContextType | undefined>(undefined);
 const UserProvierContext = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<User | undefined>(undefined);
+	const [card, setCard] = useState<UserContextType["card"]>({
+		number: "5142 7512 3412 3456",
+		expiry: "04/25",
+		cvv: "123",
+		name: "John Smith",
+		design: "CARD1",
+		balance: 4000,
+	});
 	const [loading, setLoading] = useState(true);
 	const isSignedIn = useMemo(() => user !== undefined, [user]);
+	const router = useRouter();
 	const signIn = (email: string, password: string) => {
-		setUser({
+		const data = {
 			id: "1",
 			name: "A1um1",
 			email,
 			password,
-		});
+		};
+		setUser(data);
+		localStorage.setItem("user", JSON.stringify(data));
+		location.href = "/";
 	};
 	const signOut = () => {
 		setUser(undefined);
+		localStorage.removeItem("user");
+		location.href = "/signin";
 	};
 	useEffect(() => {
 		if (!window) return;
@@ -44,11 +77,23 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 			setUser(JSON.parse(user));
 		}
 		setLoading(false);
-	});
+	}, []);
+
+	const setCardDesign = (design: keyof typeof cardDesign) => {
+		setCard((prev) => ({ ...prev, design }));
+	};
 
 	return (
 		<UserContext.Provider
-			value={{ user, signIn, isSignedIn, isLoading: loading, signOut }}
+			value={{
+				user,
+				signIn,
+				isSignedIn,
+				isLoading: loading,
+				signOut,
+				card,
+				setCardDesign,
+			}}
 		>
 			{children}
 		</UserContext.Provider>
@@ -63,10 +108,12 @@ const useUser = () => {
 };
 
 const IsAuthed = ({ children }: { children: ReactNode }) => {
-	const { isSignedIn } = useUser();
-	if (isSignedIn) {
-		return <>{children}</>;
-	}
+	const { isSignedIn, isLoading } = useUser();
+	const router = useRouter();
+	if (isLoading) return null;
+
+	if (isSignedIn) return <>{children}</>;
+
 	return null;
 };
-export { UserContext, UserProvierContext, useUser };
+export { IsAuthed, UserContext, UserProvierContext, useUser };
