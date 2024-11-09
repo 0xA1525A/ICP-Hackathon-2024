@@ -1,9 +1,7 @@
 // import HashMap "mo:base/HashMap";
-import Text "mo:base/Text";
-import Nat "mo:base/Nat";
-// import Principal "mo:base/Principal";
-// import Hash "mo:base/Hash";
 import Array "mo:base/Array";
+import Nat "mo:base/Nat";
+import Text "mo:base/Text";
 // import Random "mo:base/Random";
 // import Nat32 "mo:base/Nat32";
 // import Char "mo:base/Char";
@@ -27,7 +25,7 @@ actor {
         lastname = "0";
         balance = 0.0;
         isSuspended = true;
-        password = dummy_pass
+        password = dummy_pass;
     };
 
     private stable var IDENS = [dummy_iden];

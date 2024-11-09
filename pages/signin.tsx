@@ -1,15 +1,18 @@
 import Logo from "@/components/logo";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useUser } from "../lib/userContext";
 
 export default function page() {
 	const { signIn } = useUser();
-	const handleSubmit = (e: React.FormEvent) => {
+	const router = useRouter()
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const email = (document.getElementById("email") as HTMLInputElement).value;
 		const password = (document.getElementById("password") as HTMLInputElement)
 			.value;
-		signIn(email, password);
+		await signIn(email, password);
+		router.push("/")
 	};
 	return (
 		<div className="">

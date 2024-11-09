@@ -1,3 +1,4 @@
+import { backend } from "@/declarations/backend";
 import { useRouter } from "next/router";
 import {
 	type ReactNode,
@@ -7,6 +8,7 @@ import {
 	useMemo,
 	useState,
 } from "react";
+import { toast } from "react-toastify";
 
 export const cardDesign = {
 	CARD1: {
@@ -20,7 +22,6 @@ export const cardDesign = {
 type User = {
 	id: string;
 	name: string;
-	password: string;
 	email: string;
 };
 
@@ -54,22 +55,26 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 	const [loading, setLoading] = useState(true);
 	const isSignedIn = useMemo(() => user !== undefined, [user]);
 	const router = useRouter();
-	const signIn = (email: string, password: string) => {
+	const signIn = async (email: string, password: string) => {
+		const res = await backend.validateLogin(email, password);
+		if (!res) return toast.error("Invalid email or password");
+		const user = await backend.getAccount(email);
 		const data = {
-			id: "1",
-			name: "A1um1",
+			id: email,
+			name: `${user.firstname} ${user.lastname}`,
 			email,
-			password,
 		};
 		setUser(data);
 		localStorage.setItem("user", JSON.stringify(data));
 		router.push("/");
 	};
+
 	const signOut = () => {
 		setUser(undefined);
 		localStorage.removeItem("user");
 		router.push("/signin");
 	};
+
 	useEffect(() => {
 		if (!window) return;
 		const user = localStorage.getItem("user");
