@@ -4,6 +4,8 @@ import { UserProvierContext } from "@/lib/userContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Figtree } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const figTree = Figtree({
 	variable: "--font-fig-tree",
@@ -21,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			<UserProvierContext>
 				<Qrscr />
 				<Component {...pageProps} />
+				<ToastContainer />
 			</UserProvierContext>
 		</div>
 	);

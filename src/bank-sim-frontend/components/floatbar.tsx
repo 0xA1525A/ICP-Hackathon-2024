@@ -8,6 +8,7 @@ import {
 	Settings2,
 } from "lucide-react";
 import Link from "next/link";
+import { toast } from "react-toastify";
 const navbarIcons = [
 	{
 		icon: HomeIcon,
@@ -16,7 +17,7 @@ const navbarIcons = [
 	},
 	{
 		icon: ReceiptText,
-		name: "History",
+		name: "Transactions",
 		href: "/",
 	},
 	{
@@ -27,11 +28,14 @@ const navbarIcons = [
 	{
 		icon: ChartCandlestick,
 		name: "Market",
-		href: "/",
+		href: "/market",
 	},
 	{
 		icon: Settings2,
 		name: "Settings",
+		onclick: () => {
+			toast.error("Featured not available yet");
+		},
 		href: "/",
 	},
 ];
@@ -57,8 +61,9 @@ export const Floatbar: FC = () => {
 								</Link>
 							) : (
 								<Link
-									href={v.href}
+									href={v.onclick ? "#" : v.href}
 									key={`${v.name}_Name`}
+									onClick={v.onclick || (() => {})}
 									className="w-full grow  aspect-square flex flex-col font-bold text-xxs items-center justify-center rounded-xl hover:bg-black/20 transition-all"
 								>
 									{<v.icon className="size-7" />}

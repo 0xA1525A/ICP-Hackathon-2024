@@ -16,6 +16,36 @@ const coinLists = [
 		unit: "ETH",
 		key: "ETH-USD",
 	},
+	{
+		image: "/ethereum-eth-logo.svg",
+		name: "Tether",
+		unit: "USDT",
+		key: "USDT-USD",
+	},
+	{
+		image: "/ethereum-eth-logo.svg",
+		name: "Solana",
+		unit: "SOL",
+		key: "SOL-USD",
+	},
+	{
+		image: "/ethereum-eth-logo.svg",
+		name: "BNB",
+		unit: "BNB",
+		key: "BNB-USD",
+	},
+	{
+		image: "/ethereum-eth-logo.svg",
+		name: "XRP",
+		unit: "XRP",
+		key: "XRP-USD",
+	},
+	{
+		image: "/ethereum-eth-logo.svg",
+		name: "Dogecoin",
+		unit: "DOGE",
+		key: "DOGE-USD",
+	},
 ];
 
 export default function page() {

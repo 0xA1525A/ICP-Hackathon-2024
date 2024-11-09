@@ -12,7 +12,8 @@ export default function page() {
 		signIn(email, password);
 	};
 	return (
-		<div className="h-dvh md:-mx-32 md:-my-24 -m-6 bg-gradient-to-bl from-green-400 via-slate-50 to-slate-50 py-12 p-6">
+		<div className="">
+			<div className=" bg-gradient-to-bl from-green-400 via-slate-50 to-slate-50  p-6 absolute left-0 top-0 w-full h-dvh -z-10" />
 			<div className="flex flex-col max-w-sm mx-auto items-start  my-0 md:my-12 ">
 				<div className="mb-6">
 					<Logo />

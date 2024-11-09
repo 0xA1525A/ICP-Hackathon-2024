@@ -17,8 +17,8 @@ function h2hsl(hex: string, valuesOnly = false, isDark = false) {
 	b /= 255;
 	const max = Math.max(r, g, b);
 	const min = Math.min(r, g, b);
-	let h: number;
-	let s: number;
+	let h = 0;
+	let s = 0;
 	let l = isDark ? 80 : 30;
 	if (max === min) {
 		h = s = 0; // achromatic
@@ -50,7 +50,7 @@ function h2hsl(hex: string, valuesOnly = false, isDark = false) {
 
 export default function DebitCard() {
 	const { card, setCardDesign } = useUser();
-	const [color, setColor] = useState({ color: "#000000", isDark: false });
+	const [color, setColor] = useState({ color: "#0f0f0f", isDark: false });
 	const [open, setOpen] = useState(false);
 	useMemo(async () => {
 		const fac = new FastAverageColor();
@@ -65,7 +65,7 @@ export default function DebitCard() {
 			<button
 				onClick={() => setOpen(true)}
 				type="button"
-				className="mb-5 md:mb-0 overflow-hidden md:max-w-sm rounded-2xl aspect-video relative w-full flex items-center h-full text-left z-0"
+				className="mb-5 md:mb-0 overflow-hidden md:max-w-sm rounded-2xl aspect-video relative w-full flex items-center h-full text-left z-0 bg-gray-900/20"
 				style={{
 					boxShadow: `0 3px 30px 2px ${color.color}`,
 				}}
@@ -161,12 +161,12 @@ export default function DebitCard() {
 										<button
 											key={v}
 											onClick={() => {
-												setCardDesign(v);
+												setCardDesign(v as keyof typeof cardDesign);
 											}}
 											type="button"
 											className=" size-12 rounded-lg overflow-hidden bg-center shadow bg-cover"
 											style={{
-												backgroundImage: `url(${cardDesign[v].image})`,
+												backgroundImage: `url(${cardDesign[v as keyof typeof cardDesign].image})`,
 											}}
 										/>
 									))}

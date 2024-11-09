@@ -1,6 +1,17 @@
-import { useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
-export const useFade = (initial?: boolean) => {
+export const useFade = (
+	initial?: boolean,
+): [
+	boolean,
+	Dispatch<SetStateAction<boolean>>,
+	{
+		style: {
+			animation: string;
+		};
+		onAnimationEnd: () => void;
+	},
+] => {
 	const [show, setShow] = useState(!!initial);
 	const [isVisible, setVisible] = useState(show);
 

@@ -63,12 +63,12 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 		};
 		setUser(data);
 		localStorage.setItem("user", JSON.stringify(data));
-		location.href = "/";
+		router.push("/");
 	};
 	const signOut = () => {
 		setUser(undefined);
 		localStorage.removeItem("user");
-		location.href = "/signin";
+		router.push("/signin");
 	};
 	useEffect(() => {
 		if (!window) return;
@@ -110,8 +110,12 @@ const useUser = () => {
 const IsAuthed = ({ children }: { children: ReactNode }) => {
 	const { isSignedIn, isLoading } = useUser();
 	const router = useRouter();
+	useEffect(() => {
+		if (!isSignedIn && !isLoading) {
+			router.replace("/signin");
+		}
+	}, [isSignedIn, isLoading]);
 	if (isLoading) return null;
-
 	if (isSignedIn) return <>{children}</>;
 
 	return null;
