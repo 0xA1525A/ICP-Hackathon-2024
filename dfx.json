@@ -1,6 +1,6 @@
 {
 	"canisters": {
-		"bank-sim-backend": {
+		"backend": {
 			"main": "backend/main.mo",
 			"type": "motoko",
 			"declarations": {
@@ -8,11 +8,10 @@
 				"output": "declarations/backend"
 			}
 		},
-		"bank-sim-frontend": {
-			"dependencies": ["bank-sim-backend"],
+		"frontend": {
+			"dependencies": ["backend"],
 			"source": ["./out"],
 			"type": "assets",
-			"workspace": "bank-sim-frontend",
 			"declarations": {
 				"node_compatibility": true,
 				"output": "declarations/frontend"

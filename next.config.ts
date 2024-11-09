@@ -1,16 +1,18 @@
+import DFXWebPackConfig from "dfx.webpack.config";
 import type { NextConfig } from "next";
-import path from "node:path";
+import webpack from "webpack";
+DFXWebPackConfig.initCanisterIds();
+const EnvPlugin = new webpack.EnvironmentPlugin({
+	DFX_NETWORK: "local",
+});
+
 const nextConfig: NextConfig = {
 	output: "export",
 	images: {
 		unoptimized: true,
 	},
-	webpack: (config, { isServer }) => {
-		console.log(path.resolve(__dirname, "../declarations"));
-		config.resolve.alias = {
-			...config.resolve.alias,
-			declarations: path.resolve(__dirname, "../declarations"),
-		};
+	webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+		config.plugins.push(EnvPlugin);
 		return config;
 	},
 	/* config options here */

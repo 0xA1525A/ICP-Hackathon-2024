@@ -26,7 +26,8 @@
 		"react-toastify": "^10.0.6",
 		"usehooks-ts": "^3.1.0",
 		"vaul": "^1.1.1",
-		"web3": "^4.15.0"
+		"web3": "^4.15.0",
+		"webpack": "^5.96.1"
 	},
 	"devDependencies": {
 		"@types/node": "^20",
