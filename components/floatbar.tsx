@@ -1,6 +1,5 @@
 import type { FC } from "react";
 
-import { Link } from "@tanstack/react-router";
 import {
 	ChartCandlestick,
 	HomeIcon,
@@ -8,6 +7,7 @@ import {
 	ReceiptText,
 	Settings2,
 } from "lucide-react";
+import Link from "next/link";
 import { toast } from "react-toastify";
 
 const navbarIcons = [

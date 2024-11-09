@@ -1,4 +1,4 @@
-import { redirect } from '@tanstack/react-router';
+import { useRouter } from "next/router";
 import {
 	type ReactNode,
 	createContext,
@@ -53,7 +53,7 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 	});
 	const [loading, setLoading] = useState(true);
 	const isSignedIn = useMemo(() => user !== undefined, [user]);
-	// const router = useRouterState();
+	const router = useRouter();
 	const signIn = (email: string, password: string) => {
 		const data = {
 			id: "1",
@@ -63,16 +63,12 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 		};
 		setUser(data);
 		localStorage.setItem("user", JSON.stringify(data));
-		redirect({
-			to: "/",
-		});
+		router.push("/");
 	};
 	const signOut = () => {
 		setUser(undefined);
 		localStorage.removeItem("user");
-		redirect({
-			to: "/signin",
-		});
+		router.push("/signin");
 	};
 	useEffect(() => {
 		if (!window) return;
@@ -113,11 +109,10 @@ const useUser = () => {
 
 const IsAuthed = ({ children }: { children: ReactNode }) => {
 	const { isSignedIn, isLoading } = useUser();
+	const router = useRouter();
 	useEffect(() => {
 		if (!isSignedIn && !isLoading) {
-			redirect({
-				to: "/signin",
-			})
+			router.replace("/signin");
 		}
 	}, [isSignedIn, isLoading]);
 	if (isLoading) return null;
