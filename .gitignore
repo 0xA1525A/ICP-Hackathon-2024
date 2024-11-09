@@ -22,6 +22,6 @@ dist/
 .svelte-kit/
 .next/**/*
 .next
-.out/**/*
+out/**/*
 # environment variables
 .env
