@@ -1,26 +1,30 @@
 {
-  "canisters": {
-    "bank-sim-backend": {
-      "main": "src/bank-sim-backend/main.mo",
-      "type": "motoko"
-    },
-    "bank-sim-frontend": {
-      "dependencies": [
-        "bank-sim-backend"
-      ],
-      "source": [
-        "src/bank-sim-frontend/out"
-      ],
-      "type": "assets",
-      "workspace": "bank-sim-frontend"
-    }
-  },
-  "defaults": {
-    "build": {
-      "args": "",
-      "packtool": ""
-    }
-  },
-  "output_env_file": ".env",
-  "version": 1
+	"canisters": {
+		"bank-sim-backend": {
+			"main": "backend/main.mo",
+			"type": "motoko",
+			"declarations": {
+				"node_compatibility": true,
+				"output": "declarations/backend"
+			}
+		},
+		"bank-sim-frontend": {
+			"dependencies": ["bank-sim-backend"],
+			"source": ["./out"],
+			"type": "assets",
+			"workspace": "bank-sim-frontend",
+			"declarations": {
+				"node_compatibility": true,
+				"output": "declarations/frontend"
+			}
+		}
+	},
+	"defaults": {
+		"build": {
+			"args": "",
+			"packtool": ""
+		}
+	},
+	"output_env_file": ".env",
+	"version": 1
 }
