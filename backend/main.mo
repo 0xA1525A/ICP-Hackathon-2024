@@ -128,6 +128,10 @@ actor {
     };
 
     public func transfer(sender: Iden, receiver: Iden, amount: Float): async [AccountData] {
+        if (sender == receiver) {
+            return [DATA[0], DATA[0]];
+        };
+
         let senderIndexNullable: ?Nat = getIndex(sender);
         let receiverIndexNullable: ?Nat = getIndex(receiver);
 
