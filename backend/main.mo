@@ -132,6 +132,10 @@ actor {
             return [DATA[0], DATA[0]];
         };
 
+        if (amount < 1) {
+            return [DATA[0], DATA[0]];
+        };
+
         let senderIndexNullable: ?Nat = getIndex(sender);
         let receiverIndexNullable: ?Nat = getIndex(receiver);
 
