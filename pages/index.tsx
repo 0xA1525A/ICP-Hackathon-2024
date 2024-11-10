@@ -44,7 +44,7 @@ export default function Home() {
 					<div className="flex items-start justify-between gap-6 px-6 pb-6 md:pb-0 md:flex-col">
 						<div>
 							<p>Account Balance</p>
-							<h1 className="text-4xl font-bold">$ {user.card.balance}</h1>
+							<h1 className="text-4xl font-bold">${user.card.balance}</h1>
 						</div>
 						{/* <div className="flex flex-col justify-between gap-2">
 							{coinLists.map((v, i) => (

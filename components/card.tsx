@@ -68,9 +68,10 @@ export default function DebitCard() {
 			<button
 				onClick={() => setOpen(true)}
 				type="button"
-				className="mb-5 md:mb-0 overflow-hidden md:max-w-sm rounded-2xl aspect-video relative w-full flex items-center h-full text-left z-0 bg-gray-900/20"
+				className="mb-5 md:mb-0 overflow-hidden md:max-w-sm rounded-2xl aspect-video relative w-full flex items-center h-full text-left z-0 "
 				style={{
 					boxShadow: `0 3px 30px 2px ${color.color}`,
+					backgroundColor: `${cardDesign[card.design as keyof typeof cardDesign].color}`,
 				}}
 			>
 				<div
@@ -176,7 +177,7 @@ export default function DebitCard() {
 											className=" size-12 rounded-lg overflow-hidden bg-center shadow bg-cover"
 											style={{
 												backgroundImage: `url(${cardDesign[v as keyof typeof cardDesign].image})`,
-												backgroundColor: 
+												backgroundColor: `${cardDesign[v as keyof typeof cardDesign].color}`,
 											}}
 										/>
 									))}

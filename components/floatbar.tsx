@@ -19,7 +19,7 @@ const navbarIcons = [
 	{
 		icon: ReceiptText,
 		name: "Transactions",
-		href: "/",
+		href: "/history",
 	},
 	{
 		icon: QrCode,

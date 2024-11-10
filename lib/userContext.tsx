@@ -16,9 +16,11 @@ import { toast } from "react-toastify";
 export const cardDesign = {
 	CARD1: {
 		image: "/14.-Prim_1.jpg",
+		color: "#FAC3D0",
 	},
 	CARD2: {
 		image: "/100.-test.webp",
+		color: "#32347C",
 	},
 } as const;
 

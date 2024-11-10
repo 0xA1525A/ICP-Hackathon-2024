@@ -212,7 +212,7 @@ export default function Qrscr() {
 									<h2 className="mb-2 text-center">My Wallet Address</h2>
 									<input
 										className="w-full rounded-full px-4 py-2 border read"
-										defaultValue="0xd9dB889D1253F8052e8333FCA9a04eb05b659aF3"
+										defaultValue={user?.user?.id}
 										readOnly
 									/>
 								</div>
