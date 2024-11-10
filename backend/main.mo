@@ -1,10 +1,6 @@
-// import HashMap "mo:base/HashMap";
-import Array "mo:base/Array";
-import Nat "mo:base/Nat";
 import Text "mo:base/Text";
-// import Random "mo:base/Random";
-// import Nat32 "mo:base/Nat32";
-// import Char "mo:base/Char";
+import Nat "mo:base/Nat";
+import Array "mo:base/Array";
 
 actor {
     type Iden = Text;
@@ -17,19 +13,31 @@ actor {
         password: Text;
     };
 
+    type History = {
+        sender: Iden;
+        receiver: Iden;
+        amount: Float;
+    };
+
     // max_user_amount: Nat = 10_000_000_000;
-    let dummy_iden: Iden = "0";
-    let dummy_pass: Text = "Hello World!";
-    let dummy_data: AccountData = {
+    let dummyIden: Iden = "0";
+    let dummyPass: Text = "Hello World!";
+    let dummyData: AccountData = {
         firstname = "0";
         lastname = "0";
         balance = 0.0;
         isSuspended = true;
-        password = dummy_pass;
+        password = dummyPass
+    };
+    let dummy_hist: History = {
+        sender = "0";
+        receiver = "0";
+        amount = 0.0;
     };
 
-    private stable var IDENS = [dummy_iden];
-    private stable var DATA = [var dummy_data];
+    private stable var IDENS = [dummyIden];
+    private stable var DATA = [var dummyData];
+    private stable var HIST = [dummy_hist];
 
     private func getIndex(iden: Text): ?Nat {
         return Array.indexOf<Iden>(iden, IDENS, Text.equal);
@@ -42,10 +50,22 @@ actor {
         };
     };
 
-    public func getBalance(iden: Text): async Float {
+    public query func getData(iden: Iden): async AccountData {
+        let nullableIndex: ?Nat = getIndex(iden);
+        let index: Nat = replaceNull<Nat>(nullableIndex, 0);
+
+        return DATA[index];
+    };
+
+    public query func getBalance(iden: Text): async Float {
         let nullableIndex: ?Nat = getIndex(iden);
         let index: Nat = replaceNull<Nat>(nullableIndex, 0);
         return DATA[index].balance;
+    };
+
+    public query func getHistory(iden: Iden): async [History] {
+        let history: [History] = Array.filter<History>(HIST, func({sender: Iden; receiver: Iden; amount: Float}): Bool { return sender == iden or receiver == iden; });
+        return history;
     };
 
     public func createAccount(iden: Text, password: Text, firstname: Text, lastname: Text, balance: Float): async [Iden] {
@@ -77,6 +97,10 @@ actor {
         return plPass: Text;
     };
 
+    public query func dumpHistory(): async [History] {
+        return HIST;
+    };
+
     public func validateLogin(iden: Text, plPass: Text): async Bool {
         if (getIndex(iden) == null) {
             return false;
@@ -99,7 +123,7 @@ actor {
         return true;
     };
 
-    public func getAllIden(): async [Iden] {
+    public query func dumpIden(): async [Iden] {
         return IDENS;
     };
 
@@ -146,6 +170,16 @@ actor {
         mData[receiverIndex] := newReceiverData;
 
         DATA := mData;
+
+        let newHistory: History = {
+            sender = sender;
+            receiver = receiver;
+            amount = amount;
+        };
+
+        let mHist = Array.append<History>(HIST, [newHistory]);
+
+        HIST := mHist;
 
         return [DATA[senderIndex], DATA[receiverIndex]];
     };
