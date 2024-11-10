@@ -79,7 +79,7 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 
 		const i = setInterval(() => {
 			refetchBalance();
-		}, 30_000);
+		}, 10_000);
 		refetchBalance();
 		return () => clearInterval(i);
 	}, [user]);

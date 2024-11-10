@@ -102,7 +102,18 @@ export default function Qrscr() {
 								<div className="aspect-square w-full h-dvh flex items-center flex-col justify-center backdrop-blur-2xl bg-gradient-to-b from-slate-900 to-slate-700 bg-black">
 									<div className="p-6 rounded-2xl overflow-hidden">
 										<Scanner
-											onScan={(result) => alert(result)}
+											onScan={(result) => {
+												if (result[0]) {
+													router.push(
+														`?transfer=send&address=${result[0].rawValue}`,
+														undefined,
+														{
+															scroll: false,
+															shallow: false,
+														},
+													);
+												}
+											}}
 											classNames={{
 												container:
 													"w-full aspect-sqaure overflow-hidden rounded-2xl max-w-96",
@@ -134,6 +145,7 @@ export default function Qrscr() {
 														name="address"
 														type="text"
 														className="border rounded-lg px-4 py-2 block w-full"
+														defaultValue={query.address || ""}
 													/>
 												</div>
 												<div className="">
@@ -205,7 +217,7 @@ export default function Qrscr() {
 									</h1>
 									<div className="border-primary bg-white border-4 mb-2 rounded-2xl p-6 aspect-square max-w-80 mx-auto">
 										<QRCodeSVG
-											value="https://a1um1.github.io"
+											value={user?.user?.id || ""}
 											className="w-full h-full max-w-80"
 										/>
 									</div>
