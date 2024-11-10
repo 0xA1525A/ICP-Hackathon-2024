@@ -2,12 +2,11 @@ import { backend } from "@/declarations/backend";
 import cn from "@/lib/cn";
 import { useUser } from "@/lib/userContext";
 import { Scanner } from "@yudiel/react-qr-scanner";
-import { Loader2 } from "lucide-react";
+import { CheckCircle2Icon, Loader2, XCircleIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { QRCodeSVG } from "qrcode.react";
 import { type FormEvent, useMemo, useState } from "react";
-import { toast } from "react-toastify";
 import { Drawer } from "vaul";
 
 const method = {
@@ -38,6 +37,7 @@ export default function Qrscr() {
 	const onSend = async (e: FormEvent) => {
 		e.preventDefault();
 		setIsSending(true);
+
 		const formData = new FormData(e.target as HTMLFormElement);
 		try {
 			const res = await backend.transfer(
@@ -46,11 +46,16 @@ export default function Qrscr() {
 				Number.parseInt(formData.get("amount") as string),
 			);
 			if (res[0].isSuspended && res[1].isSuspended) {
+				setState("failed");
 				setIsSending(false);
-				return toast.error("Invalid address or amount");
+				// return toast.error("Invalid address or amount");
+				return;
 			}
+			user.refetchBalance();
+			setState("success");
 		} catch (e) {
-			toast.error("Invalid address or amount");
+			setState("failed");
+			// toast.error("Invalid address or amount");
 		}
 		setIsSending(false);
 	};
@@ -110,10 +115,10 @@ export default function Qrscr() {
 							{query.transfer === "send" && (
 								<div className="px-4 pt-24 pb-4">
 									{isSending ? (
-										<div className="flex items-center justify-between ">
-											<Loader2 className="size-24 animate-spin mx-auto my-12" />
+										<div className="flex justify-center">
+											<Loader2 className="size-24 animate-spin my-12" />
 										</div>
-									) : (
+									) : state === "waiting" ? (
 										<>
 											<h1 className="text-3xl font-bold mb-4">Send</h1>
 											<form
@@ -166,6 +171,30 @@ export default function Qrscr() {
 												</button>
 											</form>
 										</>
+									) : state === "success" ? (
+										<div className="flex items-center justify-center flex-col gap-4">
+											<CheckCircle2Icon className="size-24 mx-auto my-4 text-green-500" />
+											<p>Successfully proccess payment</p>
+											<button
+												className="bg-primary text-white w-full px-6 py-3 rounded-lg font-bold"
+												type="button"
+												onClick={() => setState("waiting")}
+											>
+												Back
+											</button>
+										</div>
+									) : (
+										<div className="flex items-center justify-center flex-col gap-4">
+											<XCircleIcon className="size-24 mx-auto my-4 text-red-500 " />
+											<p>Failed to proccess payment</p>
+											<button
+												className="bg-primary text-white w-full px-6 py-3 rounded-lg"
+												type="button"
+												onClick={() => setState("waiting")}
+											>
+												Back
+											</button>
+										</div>
 									)}
 								</div>
 							)}

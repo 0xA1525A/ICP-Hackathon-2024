@@ -2,6 +2,7 @@ import { backend } from "@/declarations/backend";
 import { useRouter } from "next/router";
 import seedrandom from "seedrandom";
 
+import useWindowFocus from "@/lib/onFocus";
 import {
 	type ReactNode,
 	createContext,
@@ -42,9 +43,12 @@ type UserContextType = {
 	isLoading: boolean;
 	setCardDesign: (design: keyof typeof cardDesign) => void;
 	signOut: () => void;
+	refetchBalance: () => void;
 };
 const UserContext = createContext<UserContextType | undefined>(undefined);
 const UserProvierContext = ({ children }: { children: ReactNode }) => {
+	const windowFocused = useWindowFocus();
+
 	const [user, setUser] = useState<User | undefined>(undefined);
 	const [card, setCard] = useState<UserContextType["card"]>({
 		number: "5142 7512 3412 3456",
@@ -54,6 +58,12 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 		design: "CARD1",
 		balance: 0,
 	});
+	const refetchBalance = () => {
+		if (!user) return;
+		backend.getBalance(user.id).then((data) => {
+			setCard((v) => ({ ...v, balance: data }));
+		});
+	};
 	useEffect(() => {
 		if (!user) return;
 		const myrng = seedrandom(user.id);
@@ -61,20 +71,23 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 			...prev,
 			number: `5142 ${Math.floor(myrng() * 10000)} ${Math.floor(myrng() * 10000)} ${Math.floor(myrng() * 10000)}`,
 		}));
-		const fnx = () => {
-			backend.getBalance(user.id).then((data) => {
-				setCard((v) => ({ ...v, balance: data }));
-			});
-		};
+
 		const i = setInterval(() => {
-			fnx();
+			refetchBalance();
 		}, 30_000);
-		fnx();
+		refetchBalance();
 		return () => clearInterval(i);
 	}, [user]);
+
 	const [loading, setLoading] = useState(true);
 	const isSignedIn = useMemo(() => user !== undefined, [user]);
 	const router = useRouter();
+
+	useEffect(() => {
+		if (!windowFocused) return;
+		refetchBalance();
+	}, [windowFocused]);
+
 	const signIn = async (email: string, password: string) => {
 		const res = await backend.validateLogin(email, password);
 		if (!res) return toast.error("Invalid email or password");
@@ -115,6 +128,7 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 				signOut,
 				card,
 				setCardDesign,
+				refetchBalance,
 			}}
 		>
 			{children}
