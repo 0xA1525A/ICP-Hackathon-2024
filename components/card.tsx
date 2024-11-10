@@ -52,6 +52,7 @@ export default function DebitCard() {
 	const { card, setCardDesign } = useUser();
 	const [color, setColor] = useState({ color: "#0f0f0f", isDark: false });
 	const [open, setOpen] = useState(false);
+	const user = useUser();
 	useMemo(async () => {
 		const fac = new FastAverageColor();
 		const color = await fac.getColorAsync(
@@ -78,7 +79,9 @@ export default function DebitCard() {
 						color: h2hsl(color.color, false, color.isDark) || "",
 					}}
 				>
-					<h3 className="text-2xl">John Smith</h3>
+					<h3 className="text-2xl">
+						{user?.user?.firstname} {user?.user?.lastname}
+					</h3>
 					<div className="flex items-center justify-between mt-6 w-full">
 						<div className="leading-none">
 							<small>Valid Thru</small>
@@ -125,7 +128,9 @@ export default function DebitCard() {
 											<div className="leading-none">
 												<small>Holder name</small>
 												<br />
-												<span className="text-lg">{card.name}</span>
+												<span className="text-lg">
+													{user.user?.firstname} {user.user?.lastname}
+												</span>
 											</div>
 											<div className="leading-none">
 												<small>Valid Thru</small>
@@ -171,6 +176,7 @@ export default function DebitCard() {
 											className=" size-12 rounded-lg overflow-hidden bg-center shadow bg-cover"
 											style={{
 												backgroundImage: `url(${cardDesign[v as keyof typeof cardDesign].image})`,
+												backgroundColor: 
 											}}
 										/>
 									))}

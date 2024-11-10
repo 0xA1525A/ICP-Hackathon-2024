@@ -2,7 +2,7 @@
 - Name of team: Bad_dev
 - Name of track: : Fully Onchain (+AI)
 - Github repo link: https://github.com/0xA1525A/ICP-Hackathon-2024
-– Team participants:
+- Team participants:
   - 0xA1525A - Backend
   - a1um1 - Frontend
   - D33-001 - UX/UI Design
