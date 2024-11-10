@@ -3,21 +3,7 @@ import { Floatbar } from "@/components/floatbar";
 import { Navbar } from "@/components/navbar";
 import { ArrowRightLeft, DollarSign, ShuffleIcon } from "lucide-react";
 import Link from "next/link";
-import { IsAuthed } from "../lib/userContext";
-const coinLists = [
-	{
-		image: "/bitcoin-btc-logo.svg",
-		price: 0.0042,
-	},
-	{
-		image: "/ethereum-eth-logo.svg",
-		price: 0.0007,
-	},
-	{
-		image: "/tether-usdt-logo.svg",
-		price: 400.0,
-	},
-];
+import { IsAuthed, useUser } from "../lib/userContext";
 
 const mockTransactions = [
 	{
@@ -48,6 +34,7 @@ const mockTransactions = [
 ];
 
 export default function Home() {
+	const user = useUser();
 	return (
 		<IsAuthed>
 			<Navbar />
@@ -57,9 +44,9 @@ export default function Home() {
 					<div className="flex items-start justify-between gap-6 px-6 pb-6 md:pb-0 md:flex-col">
 						<div>
 							<p>Account Balance</p>
-							<h1 className="text-4xl font-bold">$ 4,210</h1>
+							<h1 className="text-4xl font-bold">$ {user.card.balance}</h1>
 						</div>
-						<div className="flex flex-col justify-between gap-2">
+						{/* <div className="flex flex-col justify-between gap-2">
 							{coinLists.map((v, i) => (
 								<div
 									key={`item-k-${v.image}`}
@@ -69,7 +56,7 @@ export default function Home() {
 									<p className="text-xs font-bold">{v.price}</p>
 								</div>
 							))}
-						</div>
+						</div> */}
 					</div>
 				</div>
 				<div className="mb-8 flex gap-4 md:flex-col">

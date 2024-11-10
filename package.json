@@ -9,12 +9,13 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"generate": "dfx generate"
+		"generate": "dfx build && dfx generate && sed -i '' 's/CANISTER_ID_BACKEND/NEXT_PUBLIC_CANISTER_ID_BACKEND/g' 'declarations/backend/index.js'"
 	},
 	"dependencies": {
 		"@dfinity/agent": "^2.1.3",
 		"@dfinity/candid": "^2.1.3",
 		"@dfinity/principal": "^2.1.3",
+		"@types/seedrandom": "^3.0.8",
 		"@yudiel/react-qr-scanner": "^2.0.8",
 		"ethers": "^6.13.4",
 		"fast-average-color": "^9.4.0",
@@ -24,6 +25,7 @@
 		"react": "19.0.0-rc-66855b96-20241106",
 		"react-dom": "19.0.0-rc-66855b96-20241106",
 		"react-toastify": "^10.0.6",
+		"seedrandom": "^3.0.5",
 		"usehooks-ts": "^3.1.0",
 		"vaul": "^1.1.1",
 		"web3": "^4.15.0",

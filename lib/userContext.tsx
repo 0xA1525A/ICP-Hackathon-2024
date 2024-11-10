@@ -1,5 +1,7 @@
 import { backend } from "@/declarations/backend";
 import { useRouter } from "next/router";
+import seedrandom from "seedrandom";
+
 import {
 	type ReactNode,
 	createContext,
@@ -50,18 +52,35 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 		cvv: "123",
 		name: "John Smith",
 		design: "CARD1",
-		balance: 4000,
+		balance: 0,
 	});
+	useEffect(() => {
+		if (!user) return;
+		const myrng = seedrandom(user.id);
+		setCard((prev) => ({
+			...prev,
+			number: `5142 ${Math.floor(myrng() * 10000)} ${Math.floor(myrng() * 10000)} ${Math.floor(myrng() * 10000)}`,
+		}));
+		const fnx = () => {
+			backend.getBalance(user.id).then((data) => {
+				setCard((v) => ({ ...v, balance: data }));
+			});
+		};
+		const i = setInterval(() => {
+			fnx();
+		}, 30_000);
+		fnx();
+		return () => clearInterval(i);
+	}, [user]);
 	const [loading, setLoading] = useState(true);
 	const isSignedIn = useMemo(() => user !== undefined, [user]);
 	const router = useRouter();
 	const signIn = async (email: string, password: string) => {
 		const res = await backend.validateLogin(email, password);
 		if (!res) return toast.error("Invalid email or password");
-		const user = await backend.getAccount(email);
 		const data = {
 			id: email,
-			name: `${user.firstname} ${user.lastname}`,
+			name: "John Smith",
 			email,
 		};
 		setUser(data);
@@ -78,9 +97,7 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 	useEffect(() => {
 		if (!window) return;
 		const user = localStorage.getItem("user");
-		if (user) {
-			setUser(JSON.parse(user));
-		}
+		if (user) setUser(JSON.parse(user));
 		setLoading(false);
 	}, []);
 
@@ -106,9 +123,7 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 };
 const useUser = () => {
 	const context = useContext(UserContext);
-	if (context === undefined) {
-		throw new Error("useUser must be used within a UserProvider");
-	}
+	if (!context) throw new Error("useUser must be used within UserProvider");
 	return context;
 };
 

@@ -9,18 +9,17 @@ export const idlFactory = ({ IDL }) => {
   });
   return IDL.Service({
     'createAccount' : IDL.Func(
-        [IDL.Text, IDL.Text, IDL.Text, IDL.Text],
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Float64],
         [IDL.Vec(Iden)],
         [],
       ),
-    'getAccount' : IDL.Func([IDL.Text], [AccountData], []),
-    'getAllData' : IDL.Func([], [IDL.Vec(AccountData)], ['query']),
-    'getAllIden' : IDL.Func([], [IDL.Vec(Iden)], ['query']),
-    'hashPassword' : IDL.Func([IDL.Text], [IDL.Text], ['query']),
-    'replaceNullNat' : IDL.Func(
-        [IDL.Opt(IDL.Nat), IDL.Nat],
-        [IDL.Nat],
-        ['query'],
+    'getAllIden' : IDL.Func([], [IDL.Vec(Iden)], []),
+    'getBalance' : IDL.Func([IDL.Text], [IDL.Float64], []),
+    'hashPassword' : IDL.Func([IDL.Text], [IDL.Text], []),
+    'transfer' : IDL.Func(
+        [Iden, Iden, IDL.Float64],
+        [IDL.Vec(AccountData)],
+        [],
       ),
     'validateLogin' : IDL.Func([IDL.Text, IDL.Text], [IDL.Bool], []),
   });

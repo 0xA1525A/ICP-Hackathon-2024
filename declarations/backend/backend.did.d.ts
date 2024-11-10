@@ -11,12 +11,14 @@ export interface AccountData {
 }
 export type Iden = string;
 export interface _SERVICE {
-  'createAccount' : ActorMethod<[string, string, string, string], Array<Iden>>,
-  'getAccount' : ActorMethod<[string], AccountData>,
-  'getAllData' : ActorMethod<[], Array<AccountData>>,
+  'createAccount' : ActorMethod<
+    [string, string, string, string, number],
+    Array<Iden>
+  >,
   'getAllIden' : ActorMethod<[], Array<Iden>>,
+  'getBalance' : ActorMethod<[string], number>,
   'hashPassword' : ActorMethod<[string], string>,
-  'replaceNullNat' : ActorMethod<[[] | [bigint], bigint], bigint>,
+  'transfer' : ActorMethod<[Iden, Iden, number], Array<AccountData>>,
   'validateLogin' : ActorMethod<[string, string], boolean>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;

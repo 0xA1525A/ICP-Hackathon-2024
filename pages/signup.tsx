@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
 export default function page() {
-	const router = useRouter()
+	const router = useRouter();
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const email = (document.getElementById("email") as HTMLInputElement).value;
@@ -15,9 +15,14 @@ export default function page() {
 			.value;
 		const lastName = (document.getElementById("lastName") as HTMLInputElement)
 			.value;
-    const res = await backend.createAccount(email, password, firstName, lastName);
-		if (res[0].length === 0) 
-			return toast.error("Account creation failed");
+		const res = await backend.createAccount(
+			email,
+			password,
+			firstName,
+			lastName,
+			500,
+		);
+		if (res[0].length === 0) return toast.error("Account creation failed");
 		toast.success("Account created successfully");
 		router.push("/signin");
 	};

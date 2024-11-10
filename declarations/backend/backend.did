@@ -8,11 +8,10 @@ type AccountData =
    password: text;
  };
 service : {
-  createAccount: (text, text, text, text) -> (vec Iden);
-  getAccount: (text) -> (AccountData);
-  getAllData: () -> (vec AccountData) query;
-  getAllIden: () -> (vec Iden) query;
-  hashPassword: (text) -> (text) query;
-  replaceNullNat: (opt nat, nat) -> (nat) query;
+  createAccount: (text, text, text, text, float64) -> (vec Iden);
+  getAllIden: () -> (vec Iden);
+  getBalance: (text) -> (float64);
+  hashPassword: (text) -> (text);
+  transfer: (Iden, Iden, float64) -> (vec AccountData);
   validateLogin: (text, text) -> (bool);
 }

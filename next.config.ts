@@ -5,6 +5,8 @@ const EnvPlugin = new webpack.EnvironmentPlugin({
 	DFX_NETWORK: "local",
 	...(DFXWebPackConfig.initCanisterIds())
 });
+
+console.log(EnvPlugin)
 const nextConfig: NextConfig = {
 	output: "export",
 	images: {

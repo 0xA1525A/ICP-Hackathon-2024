@@ -1,10 +1,13 @@
+import { backend } from "@/declarations/backend";
 import cn from "@/lib/cn";
+import { useUser } from "@/lib/userContext";
 import { Scanner } from "@yudiel/react-qr-scanner";
-import { ChevronDown } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { QRCodeSVG } from "qrcode.react";
-import { useMemo } from "react";
+import { type FormEvent, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 import { Drawer } from "vaul";
 
 const method = {
@@ -21,11 +24,36 @@ const method = {
 
 export default function Qrscr() {
 	const router = useRouter();
+	const [isSending, setIsSending] = useState(false);
+	const [state, setState] = useState<"waiting" | "success" | "failed">(
+		"waiting",
+	);
+
 	const query = router.query;
 	const isOpen = useMemo(
 		() => Object.keys(method).some((key) => key === query.transfer),
 		[query],
 	);
+	const user = useUser();
+	const onSend = async (e: FormEvent) => {
+		e.preventDefault();
+		setIsSending(true);
+		const formData = new FormData(e.target as HTMLFormElement);
+		try {
+			const res = await backend.transfer(
+				user.user?.id || "",
+				formData.get("address") as string,
+				Number.parseInt(formData.get("amount") as string),
+			);
+			if (res[0].isSuspended && res[1].isSuspended) {
+				setIsSending(false);
+				return toast.error("Invalid address or amount");
+			}
+		} catch (e) {
+			toast.error("Invalid address or amount");
+		}
+		setIsSending(false);
+	};
 	return (
 		<Drawer.Root
 			open={isOpen}
@@ -45,7 +73,7 @@ export default function Qrscr() {
 						<div className="absolute z-10 w-full top-4">
 							<div className="w-12 h-1 rounded-full mx-auto mb-4 invert mix-blend-difference bg-white" />
 							<div className="flex text-sm">
-								<div className="flex bg-gray-200 rounded-full mx-auto">
+								<div className="flex bg-gray-200 rounded-full mx-auto p-2">
 									{Object.entries(method).map(([key, value]) => (
 										<Link
 											href={`?transfer=${key}`}
@@ -81,51 +109,64 @@ export default function Qrscr() {
 							)}
 							{query.transfer === "send" && (
 								<div className="px-4 pt-24 pb-4">
-									<h1 className="text-3xl font-bold mb-4">Send</h1>
-									<form className="flex flex-col gap-4 [&>div]:space-y-2">
-										<div className="">
-											<label htmlFor="address" className="font-bold">
-												Address
-											</label>
-											<input
-												id="address"
-												type="text"
-												className="border rounded-lg px-4 py-2 block w-full"
-											/>
+									{isSending ? (
+										<div className="flex items-center justify-between ">
+											<Loader2 className="size-24 animate-spin mx-auto my-12" />
 										</div>
-										<div className="">
-											<div className="flex items-center justify-between">
-												<label htmlFor="address" className="font-bold">
-													Amount
-												</label>
-												<div className="flex bg-gray-200 gap-2 p-1 rounded-full font-bold">
-													<button
-														className="rounded-full bg-white px-2"
-														type="button"
-													>
-														THB
-													</button>
-													<button
-														className=" flex gap-1 items-center"
-														type="button"
-													>
-														BTC <ChevronDown className="size-4" />
-													</button>
+									) : (
+										<>
+											<h1 className="text-3xl font-bold mb-4">Send</h1>
+											<form
+												className="flex flex-col gap-4 [&>div]:space-y-2"
+												onSubmit={onSend}
+											>
+												<div className="">
+													<label htmlFor="address" className="font-bold">
+														Address
+													</label>
+													<input
+														id="address"
+														name="address"
+														type="text"
+														className="border rounded-lg px-4 py-2 block w-full"
+													/>
 												</div>
-											</div>
-											<input
-												id="address"
-												type="text"
-												className="border rounded-lg px-4 py-2 block w-full"
-											/>
-										</div>
-										<button
-											type="button"
-											className="px-4 py-3 rounded-lg bg-primary text-white w-full font-bold"
-										>
-											Transfer
-										</button>
-									</form>
+												<div className="">
+													<div className="flex items-center justify-between">
+														<label htmlFor="address" className="font-bold">
+															Amount
+														</label>
+														<div className="flex bg-gray-200 gap-2 p-1 rounded-full font-bold">
+															<button
+																className="rounded-full bg-white px-2"
+																type="button"
+															>
+																THB
+															</button>
+															<button
+																className=" flex gap-1 pr-2 items-center text-gray-400"
+																type="button"
+															>
+																BTC
+															</button>
+														</div>
+													</div>
+													<input
+														id="address"
+														type="number"
+														name="amount"
+														className="border rounded-lg px-4 py-2 block w-full"
+													/>
+												</div>
+												<button
+													type="submit"
+													className="px-4 py-3 rounded-lg bg-primary text-white w-full font-bold"
+												>
+													Transfer
+												</button>
+											</form>
+										</>
+									)}
 								</div>
 							)}
 							{query.transfer === "recive" && (

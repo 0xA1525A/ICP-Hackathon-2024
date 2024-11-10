@@ -26,7 +26,8 @@ function initCanisterIds() {
 	canisters = network === "local" ? localCanisters : prodCanisters;
 	const val = {};
 	for (const canister in canisters) {
-		val[`NEXT_PUBLIC_${canister.toUpperCase()}_CANISTER_ID`] = canisters[canister][network];
+		val[`NEXT_PUBLIC_CANISTER_ID_${canister.toUpperCase()}`] =
+			canisters[canister][network];
 	}
 	return val
 	// console.log("initCanisterIds: canisters", canisters);

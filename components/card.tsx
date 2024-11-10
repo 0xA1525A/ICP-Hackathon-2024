@@ -54,12 +54,14 @@ export default function DebitCard() {
 	const [open, setOpen] = useState(false);
 	useMemo(async () => {
 		const fac = new FastAverageColor();
-		const color = await fac.getColorAsync(cardDesign[card.design].image);
+		const color = await fac.getColorAsync(
+			cardDesign[card.design as keyof typeof cardDesign].image,
+		);
 		setColor({
 			color: color.hex,
 			isDark: color.isDark,
 		});
-	}, [cardDesign[card.design].image]);
+	}, [cardDesign[card.design as keyof typeof cardDesign].image]);
 	return (
 		<>
 			<button
@@ -88,7 +90,7 @@ export default function DebitCard() {
 					</div>
 				</div>
 				<img
-					src={cardDesign[card.design].image}
+					src={cardDesign[card.design as keyof typeof cardDesign].image}
 					alt="banner"
 					className="rounded-2xl object-cover aspect-video w-full absolute"
 				/>
@@ -135,7 +137,9 @@ export default function DebitCard() {
 										</div>
 									</div>
 									<img
-										src={cardDesign[card.design].image}
+										src={
+											cardDesign[card.design as keyof typeof cardDesign].image
+										}
 										alt="banner"
 										className="rounded-2xl object-cover aspect-video w-full absolute"
 									/>
