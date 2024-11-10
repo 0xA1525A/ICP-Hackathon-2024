@@ -79,12 +79,12 @@ export default function Home() {
 			</div>
 			<div className="mb-3 flex items-center justify-between">
 				<h2 className="text-3xl font-bold">Transactions</h2>
-				<button
-					type="button"
+				<Link
+					href="/history"
 					className="px-4 py-3 rounded-lg bg-gray-100 hover:bg-gray-200 transition"
 				>
 					All Transactions
-				</button>
+				</Link>
 			</div>
 			<div className="flex flex-col divide-y-2">
 				{mockTransactions.map((v) => (

@@ -24,8 +24,11 @@ export const cardDesign = {
 
 type User = {
 	id: string;
-	name: string;
-	email: string;
+	firstname: string;
+	balance: number;
+	password: string;
+	isSuspended: boolean;
+	lastname: string;
 };
 
 type UserContextType = {
@@ -91,11 +94,8 @@ const UserProvierContext = ({ children }: { children: ReactNode }) => {
 	const signIn = async (email: string, password: string) => {
 		const res = await backend.validateLogin(email, password);
 		if (!res) return toast.error("Invalid email or password");
-		const data = {
-			id: email,
-			name: "John Smith",
-			email,
-		};
+		const userData = await backend.getData(email);
+		const data = { id: email, ...userData };
 		setUser(data);
 		localStorage.setItem("user", JSON.stringify(data));
 		router.push("/");
