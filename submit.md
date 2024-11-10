@@ -3,17 +3,37 @@
 - Name of track: : Fully Onchain (+AI)
 - Github repo link: https://github.com/0xA1525A/ICP-Hackathon-2024
 – Team participants:
-  - 0xA1525A
-  - a1um1
+  - 0xA1525A - Backend
+  - a1um1 - Frontend
+  - D33-001 - UX/UI Design
+  - RedReap0r - UX/UI Design
+  - Dotmini Software - Frontend | UX/UI Design
 
-- Describe the project:
+- Describe the project
+  - DCoin is a Web3 transactional web app that enables users to perform cryptocurrency-based financial operations. Built on Next.js for the frontend and Motoko for the backend, DCoin leverages the Internet Computer Protocol (ICP) to provide secure, scalable, and decentralized services. The app offers functionalities similar to traditional banking systems but in a decentralized ecosystem.
 - What problem it is solving
+  - Centralized Financial Systems: Traditional banking and financial systems often rely on centralized infrastructure, which can be susceptible to data breaches, high fees, and limited transparency.
+  - Limited Access to Decentralized Finance (DeFi): Existing DeFi solutions can be complex, with steep learning curves and limited cross-functional usability.
+  - High Transaction Costs and Latency: Many blockchain solutions, such as Ethereum, face high gas fees and slower transaction speeds.
 - What is your solution
+  DCoin offers a user-friendly decentralized platform where users can:
+  - Transfer and receive cryptocurrencies with ease, mimicking traditional banking apps.
+  - Exchange cryptocurrencies directly on the platform, reducing reliance on third-party services.
+  - Benefit from the speed and efficiency of the Internet Computer Protocol (ICP), which eliminates the need for intermediaries and reduces costs.
 - Unique features of it
-- Who is your competitor
+  - Seamless Transactions: Fast, low-cost crypto transfers and exchanges.
+  - User-Friendly Interface: Designed to mimic traditional banking apps for easier adoption by new users.
+  - Secure and Decentralized: Built on ICP, ensuring decentralized data storage and security.
+- Who is your competitor:
+  - Coinbase wallet, Uniswap, etc.
 - What unique features of ICP it is using
+  - Scalability: ICP enables efficient scaling, allowing the platform to handle high transaction volumes without latency.
+  - Low Transaction Costs: Unlike Ethereum or Bitcoin, ICP operates with negligible fees.
+  - End-to-End Decentralization: Both the frontend (Next.js) and backend (Motoko) can run directly on ICP, ensuring the entire app is decentralized.
+  - Security and Speed: ICP uses novel cryptography and a unique chain-key technology to provide high security while maintaining rapid transaction speeds.
+  - Persistent Data Storage: The app benefits from ICP’s decentralized data storage without relying on external cloud services.
 - OISY wallet Principal:
-  -
-- Mainnet canister link frontend:-
-- Mainnet canister link backend:-
+  - 
+- Mainnet canister link frontend: 
+- Mainnet canister link backend: 
 - Demo video link: https://www.youtube.com/watch?v=UK3RXbycZlk
