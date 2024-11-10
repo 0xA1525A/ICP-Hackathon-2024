@@ -1,5 +1,10 @@
 export const idlFactory = ({ IDL }) => {
   const Iden = IDL.Text;
+  const History = IDL.Record({
+    'sender' : Iden,
+    'amount' : IDL.Float64,
+    'receiver' : Iden,
+  });
   const AccountData = IDL.Record({
     'firstname' : IDL.Text,
     'balance' : IDL.Float64,
@@ -13,8 +18,11 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Vec(Iden)],
         [],
       ),
-    'getAllIden' : IDL.Func([], [IDL.Vec(Iden)], []),
-    'getBalance' : IDL.Func([IDL.Text], [IDL.Float64], []),
+    'dumpHistory' : IDL.Func([], [IDL.Vec(History)], ['query']),
+    'dumpIden' : IDL.Func([], [IDL.Vec(Iden)], ['query']),
+    'getBalance' : IDL.Func([IDL.Text], [IDL.Float64], ['query']),
+    'getData' : IDL.Func([Iden], [AccountData], ['query']),
+    'getHistory' : IDL.Func([Iden], [IDL.Vec(History)], ['query']),
     'hashPassword' : IDL.Func([IDL.Text], [IDL.Text], []),
     'transfer' : IDL.Func(
         [Iden, Iden, IDL.Float64],

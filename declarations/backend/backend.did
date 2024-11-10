@@ -1,4 +1,10 @@
 type Iden = text;
+type History = 
+ record {
+   amount: float64;
+   receiver: Iden;
+   sender: Iden;
+ };
 type AccountData = 
  record {
    balance: float64;
@@ -9,8 +15,11 @@ type AccountData =
  };
 service : {
   createAccount: (text, text, text, text, float64) -> (vec Iden);
-  getAllIden: () -> (vec Iden);
-  getBalance: (text) -> (float64);
+  dumpHistory: () -> (vec History) query;
+  dumpIden: () -> (vec Iden) query;
+  getBalance: (text) -> (float64) query;
+  getData: (Iden) -> (AccountData) query;
+  getHistory: (Iden) -> (vec History) query;
   hashPassword: (text) -> (text);
   transfer: (Iden, Iden, float64) -> (vec AccountData);
   validateLogin: (text, text) -> (bool);
